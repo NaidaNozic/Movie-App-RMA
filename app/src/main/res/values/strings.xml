@@ -1,4 +1,6 @@
 <resources>
-    <string name="app_name">My First Application</string>
-    <string name="Prikazi">Prikazi!</string>
+    <string name="app_name">Cinaeste</string>
+    <string name="favouriteMovies">Favourite movies</string>
+    <string name="search">Search</string>
+    <string name="upcomingMovies">Upcoming movies</string>
 </resources>
