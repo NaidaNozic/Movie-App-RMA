@@ -11,7 +11,9 @@ import com.example.myfirstapplication.R
 import com.example.myfirstapplication.data.Movie
 
 class MovieListAdapter(
-    private var movies: List<Movie>
+    //ovo je konstruktor
+    private var movies: List<Movie>,
+    private val onItemClicked: (movie:Movie) -> Unit //dodano
 ) : RecyclerView.Adapter<MovieListAdapter.MovieViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
@@ -31,6 +33,8 @@ class MovieListAdapter(
         if (id===0) id=context.getResources()
             .getIdentifier("picture1", "drawable", context.getPackageName())
         holder.movieImage.setImageResource(id)
+        holder.itemView.setOnClickListener{ onItemClicked(movies[position]) } //dodano -> poziva se metoda koja se desi onda
+                                                                             // kada se klikne na film.
     }
     fun updateMovies(movies: List<Movie>) {
         this.movies = movies
