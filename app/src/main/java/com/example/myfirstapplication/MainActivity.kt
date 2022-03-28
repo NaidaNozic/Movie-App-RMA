@@ -18,6 +18,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var recentMovies: RecyclerView
     private lateinit var recentMoviesAdapter: MovieListAdapter
     private var movieListViewModel = MovieListViewModel()
+    private lateinit var searchText: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +39,19 @@ class MainActivity : AppCompatActivity() {
         recentMovies.adapter = recentMoviesAdapter
         favoriteMoviesAdapter.updateMovies(movieListViewModel.getFavoriteMovies())
         recentMoviesAdapter.updateMovies(movieListViewModel.getRecentMovies())
+
+        if(intent?.action == Intent.ACTION_SEND && intent?.type == "text/plain")
+            handleSendText(intent)
     }
+    //aplikacija treba da odgovara na akciju tipa ACTION_SEND ,tj. ako se putem te akcije
+    //prosljeđuje tekst. Navedeni tekst treba da popuni editText u početnoj aktivnosti koji se nalazi iznad button-a
+    //pretrage.Sljedeci dio koda ispod to radi
+    private fun handleSendText(intent: Intent) {
+        intent.getStringExtra(Intent.EXTRA_TEXT)?.let {
+            searchText.setText(it)
+        }
+    }
+
     private fun showMovieDetails(movie: Movie) {
         val intent = Intent(this, MovieDetailActivity::class.java).apply {
             putExtra("movie_title", movie.title)
