@@ -50,10 +50,15 @@ class MovieDetailActivity : AppCompatActivity() {
             action = Intent.ACTION_VIEW
             setData(Uri.parse(movie.homepage))
         }
-        try {
+       /*
+       ovo je stvaralo problem. Nije mi se tekst htio kopirati u searchText aplikacije
+       try {
             startActivity(webIntent)
         } catch (e: ActivityNotFoundException) {
             // Definisati naredbe ako ne postoji aplikacija za navedenu akciju
+        }*/
+        if (webIntent.resolveActivity(packageManager) != null) {
+            startActivity(webIntent)
         }
     }
     private fun populateDetails() {

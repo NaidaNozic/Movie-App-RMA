@@ -26,6 +26,7 @@ class MainActivity : AppCompatActivity() {
 
         favoriteMovies = findViewById(R.id.favouriteMovies)
         recentMovies = findViewById(R.id.upcomingMovies)
+        searchText = findViewById(R.id.searchText) //dodano
         favoriteMovies.layoutManager = LinearLayoutManager(
             this,
             LinearLayoutManager.HORIZONTAL,
