@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myfirstapplication.data.Movie
 import com.example.myfirstapplication.viewmodel.MovieDetailViewModel
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MovieDetailActivity : AppCompatActivity() {
     private var movieDetailViewModel = MovieDetailViewModel()
@@ -20,6 +21,7 @@ class MovieDetailActivity : AppCompatActivity() {
     private lateinit var genre : TextView
     private lateinit var website : TextView
     private lateinit var poster : ImageView
+    private lateinit var shareButton: FloatingActionButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,9 +33,13 @@ class MovieDetailActivity : AppCompatActivity() {
         genre = findViewById(R.id.movie_genre)
         poster = findViewById(R.id.movie_poster)
         website = findViewById(R.id.movie_website)
+        shareButton = findViewById(R.id.shareButton)//dodano
         website.setOnClickListener{ //Potrebno je napraviti da se pokrene web preglednik kada se klikne na link web stranice filma
             // i da se učita navedena stranica.
             showWebsite()
+        }
+        shareButton.setOnClickListener{
+            shareOverview()
         }
         title.setOnClickListener{
             searchInYoutube()
@@ -44,6 +50,18 @@ class MovieDetailActivity : AppCompatActivity() {
             populateDetails()
         } else {
             finish()
+        }
+    }
+    private fun shareOverview(){
+        val intent = Intent().apply {
+            action =Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT,movie.overview)
+            type="text/plain"
+        }
+        try {
+            startActivity(intent)
+        } catch (e: ActivityNotFoundException) {
+            // Definisati naredbe ako ne postoji aplikacija za navedenu akciju
         }
     }
     private fun searchInYoutube(){
