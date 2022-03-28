@@ -51,7 +51,11 @@ class MovieDetailActivity : AppCompatActivity() {
         val intent = Intent(Intent.ACTION_VIEW)
         intent.data = Uri.parse("https://www.youtube.com/results?search_query="+title.text.toString()+"+trailer")
         intent.setPackage("com.google.android.youtube")
-        startActivity(intent)
+        try {
+            startActivity(intent)
+        } catch (e: ActivityNotFoundException) {
+            // Definisati naredbe ako ne postoji aplikacija za navedenu akciju
+        }
     }
     private fun showWebsite(){
         val webIntent: Intent = Uri.parse(movie.homepage).let { webpage ->
