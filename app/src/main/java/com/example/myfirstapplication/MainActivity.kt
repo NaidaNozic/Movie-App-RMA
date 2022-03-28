@@ -52,7 +52,6 @@ class MainActivity : AppCompatActivity() {
             searchText.setText(it)
         }
     }
-
     private fun showMovieDetails(movie: Movie) {
         val intent = Intent(this, MovieDetailActivity::class.java).apply {
             putExtra("movie_title", movie.title)

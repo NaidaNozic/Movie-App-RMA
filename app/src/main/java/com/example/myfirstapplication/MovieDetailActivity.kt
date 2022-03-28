@@ -4,11 +4,10 @@ import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.ContextCompat
+import androidx.appcompat.app.AppCompatActivity
 import com.example.myfirstapplication.data.Movie
 import com.example.myfirstapplication.viewmodel.MovieDetailViewModel
 
@@ -32,6 +31,13 @@ class MovieDetailActivity : AppCompatActivity() {
         genre = findViewById(R.id.movie_genre)
         poster = findViewById(R.id.movie_poster)
         website = findViewById(R.id.movie_website)
+        website.setOnClickListener{ //Potrebno je napraviti da se pokrene web preglednik kada se klikne na link web stranice filma
+            // i da se učita navedena stranica.
+            showWebsite()
+        }
+        title.setOnClickListener{
+            searchInYoutube()
+        }
         val extras = intent.extras
         if (extras != null) {//ovo extras su podaci koje smo poslali novom intentu preko putExtra()..a mi smo bili poslali movie_title
             movie = movieDetailViewModel.getMovieByTitle(extras.getString("movie_title",""))
@@ -39,27 +45,26 @@ class MovieDetailActivity : AppCompatActivity() {
         } else {
             finish()
         }
-
-        website.setOnClickListener{ //Potrebno je napraviti da se pokrene web preglednik kada se klikne na link web stranice filma
-            // i da se učita navedena stranica.
-            showWebsite()
-        }
+    }
+    private fun searchInYoutube(){
+        //results?search_query=divergent+trailer
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.data = Uri.parse("https://www.youtube.com/results?search_query="+title.text.toString()+"+trailer")
+        intent.setPackage("com.google.android.youtube")
+        startActivity(intent)
     }
     private fun showWebsite(){
-        val webIntent = Intent().apply {
-            action = Intent.ACTION_VIEW
-            setData(Uri.parse(movie.homepage))
+        val webIntent: Intent = Uri.parse(movie.homepage).let { webpage ->
+            Intent(Intent.ACTION_VIEW, webpage)
         }
-       /*
-       ovo je stvaralo problem. Nije mi se tekst htio kopirati u searchText aplikacije
-       try {
+        try {
+              startActivity(webIntent)
+          } catch (e: ActivityNotFoundException) {
+              // Definisati naredbe ako ne postoji aplikacija za navedenu akciju
+          }
+    /*    if (webIntent.resolveActivity(packageManager) != null) {
             startActivity(webIntent)
-        } catch (e: ActivityNotFoundException) {
-            // Definisati naredbe ako ne postoji aplikacija za navedenu akciju
         }*/
-        if (webIntent.resolveActivity(packageManager) != null) {
-            startActivity(webIntent)
-        }
     }
     private fun populateDetails() {
         title.text=movie.title
@@ -75,4 +80,4 @@ class MovieDetailActivity : AppCompatActivity() {
         poster.setImageResource(id)
     }
 
-    }
+}
