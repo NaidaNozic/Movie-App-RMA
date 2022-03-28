@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.ImageView
 import androidx.annotation.DrawableRes
 import androidx.core.graphics.drawable.toBitmap
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.core.app.launchActivity
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
@@ -36,20 +37,20 @@ class IntentInstrumentedTest {
     }
     @Test
     fun testDetailActivityInstantiation(){
-        val pokreniDetalje: Intent = Intent(MovieDetailActivity::javaClass.name)
+        val pokreniDetalje=Intent(ApplicationProvider.getApplicationContext(),MovieDetailActivity::class.java)
         pokreniDetalje.putExtra("movie_title","Pulp Fiction")
-        /*val scenario = */launchActivity<MovieDetailActivity>(pokreniDetalje)
+        launchActivity<MovieDetailActivity>(pokreniDetalje)
         onView(withId(R.id.movie_title)).check(matches(withText("Pulp Fiction")))
         onView(withId(R.id.movie_genre)).check(matches(withText("crime")))
-        onView(withId(R.id.movie_overview)).check(matches(withSubstring("pair of dinerbandits")))
+        onView(withId(R.id.movie_overview)).check(matches(withSubstring("pair of diner bandits")))
         onView(withId(R.id.movie_poster)).check(matches(withImage(R.drawable.crime)))
     }
     @Test
     fun testLinksIntent(){
         Intents.init()
-        val pokreniDetalje: Intent = Intent(MovieDetailActivity::javaClass.name)
+        val pokreniDetalje=Intent(ApplicationProvider.getApplicationContext(),MovieDetailActivity::class.java)
         pokreniDetalje.putExtra("movie_title","Pulp Fiction")
-        val scenario = launchActivity<MovieDetailActivity>(pokreniDetalje)
+        launchActivity<MovieDetailActivity>(pokreniDetalje)
         onView(withId(R.id.movie_website)).perform(click())
         intended(hasAction(Intent.ACTION_VIEW))
         Intents.release()
