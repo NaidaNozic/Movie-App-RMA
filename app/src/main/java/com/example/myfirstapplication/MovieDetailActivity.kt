@@ -1,10 +1,14 @@
 package com.example.myfirstapplication
 
+import android.content.ActivityNotFoundException
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import com.example.myfirstapplication.data.Movie
 import com.example.myfirstapplication.viewmodel.MovieDetailViewModel
 
@@ -34,6 +38,22 @@ class MovieDetailActivity : AppCompatActivity() {
             populateDetails()
         } else {
             finish()
+        }
+
+        website.setOnClickListener{ //Potrebno je napraviti da se pokrene web preglednik kada se klikne na link web stranice filma
+            // i da se učita navedena stranica.
+            showWebsite()
+        }
+    }
+    private fun showWebsite(){
+        val webIntent = Intent().apply {
+            action = Intent.ACTION_VIEW
+            setData(Uri.parse(movie.homepage))
+        }
+        try {
+            startActivity(webIntent)
+        } catch (e: ActivityNotFoundException) {
+            // Definisati naredbe ako ne postoji aplikacija za navedenu akciju
         }
     }
     private fun populateDetails() {
