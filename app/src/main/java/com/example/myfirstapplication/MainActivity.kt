@@ -1,6 +1,8 @@
 package com.example.myfirstapplication
 
+import android.content.BroadcastReceiver
 import android.content.Intent
+import android.content.IntentFilter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.EditText
@@ -17,6 +19,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var recentMoviesAdapter: MovieListAdapter
     private var movieListViewModel = MovieListViewModel()
     private lateinit var searchText: EditText
+
+    private val intentFilter = IntentFilter("android.net.conn.CONNECTIVITY_CHANGE")
+    private val br: BroadcastReceiver = MyBroadcastReceiver()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,6 +61,15 @@ class MainActivity : AppCompatActivity() {
             putExtra("movie_title", movie.title)
         }
         startActivity(intent)
+    }
+    override fun onResume() {
+        super.onResume()
+        registerReceiver(br, intentFilter)
+    }
+
+    override fun onPause() {
+        unregisterReceiver(br)
+        super.onPause()
     }
 
 }
