@@ -4,8 +4,9 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Naida/AndroidStudioProjects/MyFirstApplication/app/src/main/res/layout/activity_main.xml" value="0.25" />
-        <entry key="..\:/Users/Naida/AndroidStudioProjects/MyFirstApplication/app/src/main/res/layout/activity_movie_detail.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/Naida/AndroidStudioProjects/MyFirstApplication/app/src/main/res/layout/item_movie.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Naida/AndroidStudioProjects/MyFirstApplication/app/src/main/res/layout/activity_movie_detail.xml" value="0.264" />
+        <entry key="..\:/Users/Naida/AndroidStudioProjects/MyFirstApplication/app/src/main/res/layout/element_list.xml" value="0.12360688956433637" />
+        <entry key="..\:/Users/Naida/AndroidStudioProjects/MyFirstApplication/app/src/main/res/layout/item_movie.xml" value="0.1" />
       </map>
     </option>
   </component>
