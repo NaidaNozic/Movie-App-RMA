@@ -7,7 +7,7 @@ import android.net.ConnectivityManager
 import android.widget.Toast
 
 
-class MyBroadcastReceiver: BroadcastReceiver() {
+class ConnectivityBroadcastReceiver: BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         val cm=context.getSystemService(Context.CONNECTIVITY_SERVICE)as ConnectivityManager
         val activeNetwork = cm.activeNetwork
