@@ -57,3 +57,18 @@ fun recentMovies(): List<Movie> {
             "family")
     )
 }
+fun actors():Map<String,List<String>>{
+    return mapOf("Pride and prejudice" to listOf("Keira Knightley","Talulah Riley","Rosamund Pike","Jena Malone","Carey Mulligan","Donald Sutherland"),
+                 "Pulp Fiction" to listOf("Tim Roth","Amanda Plummer","Laura Lovelace","John Travolta","Samuel L. Jackson","Phil LaMarr"),
+                 "The Lord of the Rings" to listOf("Alan Howard","Noel Appleby","Sean Astin","Sala Baker","Sean Bean","Cate Blanchett"),
+                 "Serenity" to listOf("Nathan Fillion","Gina Torres","Alan Tudyk","Morena Baccarin","Adam Baldwin","Jewel Staite"),
+                 "Shaun of the Dead" to listOf("Simon Pegg","Kate Ashfield","Nick Frost","Lucy Davis","Dylan Moran"),
+                 "Watchmen" to listOf("Malin Akerman", "Billy Crudup","Matthew Goode","Jackie Earle Haley")
+    )
+}
+fun similarMovies():Map<String,List<String>>{
+    return mapOf("Pride and prejudice" to listOf("Emma","Sense and Sensibility","Love & Friendship","Mansfield Park"),
+                  "Pulp Fiction" to listOf("The Killing","From Dusk till Dawn","Get Shorty"),
+                  "The Lord of the Rings" to listOf("The Chronicles of Narnia Series","King Arthur: Legend of the Sword","The Monkey King Series","Harry Potter Series"),
+                  "Serenity" to listOf("Firefly","The Fifth Element","Farscape","Riddick"))
+}

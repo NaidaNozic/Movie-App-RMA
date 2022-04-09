@@ -5,11 +5,14 @@
       <map>
         <entry key="..\:/Users/Naida/AndroidStudioProjects/MyFirstApplication/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/Users/Naida/AndroidStudioProjects/MyFirstApplication/app/src/main/res/layout/activity_movie_detail.xml" value="0.264" />
+        <entry key="..\:/Users/Naida/AndroidStudioProjects/MyFirstApplication/app/src/main/res/layout/actors_fragment.xml" value="0.2296195652173913" />
         <entry key="..\:/Users/Naida/AndroidStudioProjects/MyFirstApplication/app/src/main/res/layout/element_list.xml" value="0.12360688956433637" />
         <entry key="..\:/Users/Naida/AndroidStudioProjects/MyFirstApplication/app/src/main/res/layout/favorites_fragment.xml" value="0.2296195652173913" />
         <entry key="..\:/Users/Naida/AndroidStudioProjects/MyFirstApplication/app/src/main/res/layout/item_movie.xml" value="0.1" />
         <entry key="..\:/Users/Naida/AndroidStudioProjects/MyFirstApplication/app/src/main/res/layout/recents_fragment.xml" value="0.2296195652173913" />
         <entry key="..\:/Users/Naida/AndroidStudioProjects/MyFirstApplication/app/src/main/res/layout/search_fragment.xml" value="0.2296195652173913" />
+        <entry key="..\:/Users/Naida/AndroidStudioProjects/MyFirstApplication/app/src/main/res/layout/similar_movies_fragment.xml" value="0.2296195652173913" />
+        <entry key="..\:/Users/Naida/AndroidStudioProjects/MyFirstApplication/app/src/main/res/menu/actors_similar_movies.xml" value="0.25" />
         <entry key="..\:/Users/Naida/AndroidStudioProjects/MyFirstApplication/app/src/main/res/menu/navigation.xml" value="0.25" />
       </map>
     </option>

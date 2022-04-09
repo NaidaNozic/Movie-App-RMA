@@ -8,11 +8,16 @@ import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.example.myfirstapplication.data.Movie
+import com.example.myfirstapplication.view.*
 import com.example.myfirstapplication.viewmodel.MovieDetailViewModel
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.navigation.NavigationBarView
 
 class MovieDetailActivity : AppCompatActivity() {
+    private lateinit var bottomNavigation: BottomNavigationView
     private var movieDetailViewModel = MovieDetailViewModel()
     private lateinit var movie: Movie
     private lateinit var title : TextView
@@ -23,9 +28,29 @@ class MovieDetailActivity : AppCompatActivity() {
     private lateinit var poster : ImageView
     private lateinit var shareButton: FloatingActionButton
 
+    //Listener za click
+    private val  mOnItemSelectedListener =  NavigationBarView.OnItemSelectedListener{ item ->
+        when (item.itemId) {
+            R.id.navigation_actors -> {
+                val actorsFragment = ActorsFragment(movie.title)
+                openFragment(actorsFragment)
+                return@OnItemSelectedListener true
+            }
+            R.id.navigation_similar_movies -> {
+                val similarFragment = SimilarMoviesFragment(movie.title)
+                openFragment(similarFragment)
+                return@OnItemSelectedListener true
+            }
+        }
+        false
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_detail)
+
+        //navigation
+        bottomNavigation = findViewById(R.id.navigation)
 
         title = findViewById(R.id.movie_title)
         overview = findViewById(R.id.movie_overview)
@@ -33,7 +58,9 @@ class MovieDetailActivity : AppCompatActivity() {
         genre = findViewById(R.id.movie_genre)
         poster = findViewById(R.id.movie_poster)
         website = findViewById(R.id.movie_website)
-        shareButton = findViewById(R.id.shareButton)//dodano
+        shareButton = findViewById(R.id.shareButton)
+
+
         website.setOnClickListener{ //Potrebno je napraviti da se pokrene web preglednik kada se klikne na link web stranice filma
             // i da se učita navedena stranica.
             showWebsite()
@@ -51,6 +78,10 @@ class MovieDetailActivity : AppCompatActivity() {
         } else {
             finish()
         }
+
+        bottomNavigation.setOnItemSelectedListener(mOnItemSelectedListener)
+        //Defaultni fragment
+        bottomNavigation.selectedItemId= R.id.navigation_actors
     }
     private fun shareOverview(){
         val intent = Intent().apply {
@@ -100,6 +131,12 @@ class MovieDetailActivity : AppCompatActivity() {
         if (id===0) id=context.resources
             .getIdentifier("picture1", "drawable", context.packageName)
         poster.setImageResource(id)
+    }
+    private fun openFragment(fragment: Fragment) {
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.actorsSimilarMoviesFrameLayout, fragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
     }
 
 }
