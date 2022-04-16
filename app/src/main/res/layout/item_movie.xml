@@ -16,6 +16,7 @@
     <ImageView
         android:id="@+id/movieImage"
         android:layout_width="120dp"
+        android:transitionName="poster"
         android:layout_height="110dp"
         app:srcCompat="@drawable/picture1"/>
       <TextView

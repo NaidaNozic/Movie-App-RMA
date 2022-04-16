@@ -1,5 +1,6 @@
 package com.example.myfirstapplication.view
 
+import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,6 +13,7 @@ import com.example.myfirstapplication.MovieDetailActivity
 import com.example.myfirstapplication.R
 import com.example.myfirstapplication.data.Movie
 import com.example.myfirstapplication.viewmodel.MovieListViewModel
+import android.util.Pair as UtilPair
 
 class FavoriteMoviesFragment : Fragment() {
     private lateinit var favoriteMovies: RecyclerView
@@ -22,7 +24,8 @@ class FavoriteMoviesFragment : Fragment() {
         var view = inflater.inflate(R.layout.favorites_fragment, container, false)
         favoriteMovies = view.findViewById(R.id.favoriteMovies)
         favoriteMovies.layoutManager = GridLayoutManager(activity, 2)
-        favoriteMoviesAdapter = MovieListAdapter(arrayListOf()) { movie -> showMovieDetails(movie) }
+        favoriteMoviesAdapter = MovieListAdapter(arrayListOf()) { movie,view1,view2 ->
+            showMovieDetails(movie,view1,view2) }
         favoriteMovies.adapter=favoriteMoviesAdapter
         favoriteMoviesAdapter.updateMovies(movieListViewModel.getFavoriteMovies())
         return view;
@@ -30,10 +33,15 @@ class FavoriteMoviesFragment : Fragment() {
     companion object {
         fun newInstance(): FavoriteMoviesFragment = FavoriteMoviesFragment()
     }
-    private fun showMovieDetails(movie: Movie) {
+    private fun showMovieDetails(movie: Movie, view1: View,view2:View) {
         val intent = Intent(activity, MovieDetailActivity::class.java).apply {
             putExtra("movie_title", movie.title)
         }
-        startActivity(intent)
+        val options = ActivityOptions
+            .makeSceneTransitionAnimation(activity, UtilPair.create(view1, "poster"),
+                UtilPair.create(view2, "title"))
+        startActivity(intent, options.toBundle())
     }
+
+
 }

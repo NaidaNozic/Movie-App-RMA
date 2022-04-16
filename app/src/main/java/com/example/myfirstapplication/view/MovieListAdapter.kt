@@ -13,7 +13,7 @@ import com.example.myfirstapplication.data.Movie
 class MovieListAdapter(
     //ovo je konstruktor
     private var movies: List<Movie>,
-    private val onItemClicked: (movie:Movie) -> Unit //dodano
+    private val onItemClicked: (movie:Movie,view1:View,view2:View) -> Unit //dodano
 ) : RecyclerView.Adapter<MovieListAdapter.MovieViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
@@ -33,8 +33,9 @@ class MovieListAdapter(
         if (id===0) id=context.getResources()
             .getIdentifier("picture1", "drawable", context.getPackageName())
         holder.movieImage.setImageResource(id)
-        holder.itemView.setOnClickListener{ onItemClicked(movies[position]) } //dodano -> poziva se metoda koja se desi onda
-                                                                             // kada se klikne na film.
+        holder.itemView.setOnClickListener{
+            onItemClicked(movies[position],holder.movieImage,holder.movieTitle) }
+
     }
     fun updateMovies(movies: List<Movie>) {
         this.movies = movies
