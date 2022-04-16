@@ -13,12 +13,15 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.PositionAssertions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasAction
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasPackage
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.example.myfirstapplication.view.StringAdapter
+import com.example.myfirstapplication.viewmodel.MovieDetailViewModel
 import org.hamcrest.Description
 import org.hamcrest.TypeSafeMatcher
 import org.junit.Test
@@ -80,5 +83,25 @@ class IntentInstrumentedTest {
         onView(withId(R.id.movie_title)).perform(click())
         intended(hasPackage("com.google.android.youtube"))
     }
-
+    //vjezba 5
+    @Test
+    fun testActors(){
+        val pokreniDetalje=Intent(ApplicationProvider.getApplicationContext(),MovieDetailActivity::class.java)
+        pokreniDetalje.putExtra("movie_title","Pulp Fiction")
+        launchActivity<MovieDetailActivity>(pokreniDetalje)
+        val actors = MovieDetailViewModel().getActorsByMovie("Pulp Fiction")
+        for(actor in actors)
+            onView(withId(R.id.actorsRecyclerView)).perform(RecyclerViewActions.scrollTo<StringAdapter.SimpleViewHolder>(
+                withText(actor))).check(matches(isDisplayed()))
+    }
+    //Zadatak 2
+    @Test
+    fun testSEND() {
+        var intent = Intent()
+        intent.putExtra(Intent.EXTRA_TEXT,"Neki tekst")
+        intent.action=Intent.ACTION_SEND
+        intent.type="text/plain"
+        launchActivity<MainActivity>(intent)
+        onView(withId(R.id.searchText)).check(matches(withText("Neki tekst")))
+    }
 }
