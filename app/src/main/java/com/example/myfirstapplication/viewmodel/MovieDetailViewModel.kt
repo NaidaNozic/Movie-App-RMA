@@ -15,7 +15,8 @@ class MovieDetailViewModel {
         movies.addAll(MovieRepository.getFavoriteMovies())
         val movie = movies.find { movie -> name.equals(movie.title) }
         //ako film ne postoji vratimo testni
-        return movie ?: Movie(0, "Test", "Test", "Test", "Test", "Test")
+        return movie ?: Movie(0, "Test", "Test", "Test", "Test", "Test",
+            "https://www.imdb.com/title/tt0120737/","https://www.imdb.com/title/tt0120737/")
     }
     fun getActorsByMovie(name:String):List<String>{
         var actors: Map<String,List<String>> = ActorsRepository.getActors()

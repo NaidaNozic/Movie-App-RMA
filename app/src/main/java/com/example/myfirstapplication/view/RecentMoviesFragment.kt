@@ -19,7 +19,7 @@ class RecentMoviesFragment : Fragment() {
 
     private lateinit var recentMovies: RecyclerView
     private lateinit var recentMoviesAdapter: MovieListAdapter
-    private var movieListViewModel =  MovieListViewModel()
+    private var movieListViewModel =  MovieListViewModel(null,null)
 
     override fun onCreateView(
         inflater: LayoutInflater,
