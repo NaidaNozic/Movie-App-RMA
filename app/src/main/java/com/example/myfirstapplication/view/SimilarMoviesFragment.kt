@@ -9,17 +9,28 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myfirstapplication.R
 import com.example.myfirstapplication.viewmodel.MovieDetailViewModel
-
-class SimilarMoviesFragment(name:String): Fragment() {
-    private lateinit var similarMovies: RecyclerView
-    private var movieDetailViewModel = MovieDetailViewModel()
-    private var movieTitle: String=name
+//valja
+class SimilarMoviesFragment(name:String,id:Long?): Fragment() {
+    private var movieName:String = name
+    private var movieId:Long? = id
+    private lateinit var movieRV:RecyclerView
+    private var movieList= listOf<String>()
+    private lateinit var actorsRVSimpleAdapter:StringAdapter
+    private var movieDetailViewModel =  MovieDetailViewModel(null,this@SimilarMoviesFragment::OpenSimilarMovie,null)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        var view = inflater.inflate(R.layout.similar_movies_fragment, container, false)
-        similarMovies = view.findViewById(R.id.similarRecyclerView)
-        similarMovies.layoutManager =  LinearLayoutManager(activity)
-        similarMovies.adapter=StringAdapter(movieDetailViewModel.getSimilarByMovie(movieTitle))
-        return view;
+        var view: View = inflater.inflate(R.layout.similar_movies_fragment, container, false)
+        movieRV = view.findViewById(R.id.similarRecyclerView)
+        movieList = movieName?.let { movieDetailViewModel.getSimilarByTitle(it) }!!
+        movieRV.layoutManager = LinearLayoutManager(activity)
+        actorsRVSimpleAdapter = StringAdapter(movieList)
+        movieRV.adapter = actorsRVSimpleAdapter
+        movieId?.let { movieDetailViewModel.getSimilarMoviesById(it) }
+        return view
+    }
+    fun OpenSimilarMovie(similar:MutableList<String>){
+        movieList=similar
+        actorsRVSimpleAdapter.lista = similar;
+        actorsRVSimpleAdapter.notifyDataSetChanged();
     }
 }
