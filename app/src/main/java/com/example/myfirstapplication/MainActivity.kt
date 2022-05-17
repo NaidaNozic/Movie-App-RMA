@@ -3,12 +3,14 @@ package com.example.myfirstapplication
 import android.content.BroadcastReceiver
 import android.content.Intent
 import android.content.IntentFilter
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.transition.Fade
 import android.view.Window
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
+import com.example.myfirstapplication.services.LatestMovieService
 import com.example.myfirstapplication.view.FavoriteMoviesFragment
 import com.example.myfirstapplication.view.RecentMoviesFragment
 import com.example.myfirstapplication.view.SearchFragment
@@ -61,6 +63,15 @@ class MainActivity : AppCompatActivity() {
         openFragment(favoritesFragment)
         if(intent?.action == Intent.ACTION_SEND && intent?.type == "text/plain")
             handleSendText(intent)
+        //lab 7
+        Intent(this, LatestMovieService::class.java).also {
+            //Različito pokretanje u ovisnosti od verzije
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                startForegroundService(it)
+                return
+            }
+            startService(it)
+        }
 
     }
     private fun handleSendText(intent: Intent) {
