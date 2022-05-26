@@ -5,13 +5,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.myfirstapplication.data.Movie
+import com.example.myfirstapplication.data.Cast
 
-
-class StringAdapter(lista: List<Movie>) : RecyclerView.Adapter<StringAdapter.SimpleViewHolder>() {
-
-    var lista = lista
-
+class CastStringAdapter (list: List<Cast>) : RecyclerView.Adapter<CastStringAdapter.SimpleViewHolder>(){
+    var list = list
     inner class SimpleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val textElement = itemView.findViewById<TextView>(android.R.id.text1)
     }
@@ -22,10 +19,10 @@ class StringAdapter(lista: List<Movie>) : RecyclerView.Adapter<StringAdapter.Sim
     }
 
     override fun getItemCount(): Int {
-        return lista.size
+        return list.size
     }
 
     override fun onBindViewHolder(holder: SimpleViewHolder, position: Int) {
-        holder.textElement.text=lista[position].title
+        holder.textElement.text=list[position].name
     }
 }

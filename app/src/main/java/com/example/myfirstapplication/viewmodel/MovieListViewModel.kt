@@ -1,5 +1,6 @@
 package com.example.myfirstapplication.viewmodel
 
+import com.example.myfirstapplication.data.GetMoviesResponse
 import com.example.myfirstapplication.data.Movie
 import com.example.myfirstapplication.data.MovieRepository
 import com.example.myfirstapplication.data.Result
@@ -19,6 +20,19 @@ class MovieListViewModel(private val searchDone: ((movies: List<Movie>) -> Unit)
     }
     fun getRecentMovies():List<Movie>{
         return MovieRepository.getRecentMovies();
+    }
+    fun getUpcoming( onSuccess: (movies: List<Movie>) -> Unit,
+                     onError: () -> Unit){
+        // Create a new coroutine on the UI thread
+        scope.launch{
+            // Make the network call and suspend execution until it finishes
+            val result = MovieRepository.getUpcomingMovies()
+            // Display result of the network request to the user
+            when (result) {
+                is GetMoviesResponse -> onSuccess?.invoke(result.movies)
+                else-> onError?.invoke()
+            }
+        }
     }
 
     fun search(query: String){

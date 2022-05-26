@@ -14,11 +14,10 @@ import com.example.myfirstapplication.data.Movie
 class MovieListAdapter(
     //ovo je konstruktor
     private var movies: List<Movie>,
-    private val onItemClicked: (movie:Movie,view1:View,view2:View) -> Unit //dodano
+    private val onItemClicked: (movie:Movie,view1:View,view2:View) -> Unit
 ) : RecyclerView.Adapter<MovieListAdapter.MovieViewHolder>() {
 
     private val posterPath = "https://image.tmdb.org/t/p/w342"
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val view = LayoutInflater
@@ -29,24 +28,16 @@ class MovieListAdapter(
     override fun getItemCount(): Int = movies.size
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         holder.movieTitle.text = movies[position].title;
-        val genreMatch: String? = movies[position].genre
         val context: Context = holder.movieImage.getContext()
-        var id = 0;
-        if (genreMatch!==null)
-            id = context.getResources()
-                .getIdentifier(genreMatch, "drawable", context.getPackageName())
-        if (id===0) id=context.getResources()
-            .getIdentifier("picture1", "drawable", context.getPackageName())
         Glide.with(context)
             .load(posterPath + movies[position].posterPath)
             .centerCrop()
             .placeholder(R.drawable.picture1)
-            .error(id)
-            .fallback(id)
+            .error(R.drawable.picture1)
+            .fallback(R.drawable.picture1)
             .into(holder.movieImage);
 
         holder.itemView.setOnClickListener{ onItemClicked(movies[position],holder.movieImage,holder.movieTitle) }
-
     }
     fun updateMovies(movies: List<Movie>) {
         this.movies = movies

@@ -7,6 +7,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
@@ -23,12 +24,12 @@ class MovieDetailActivity : AppCompatActivity() {
     private lateinit var overview : TextView
     private lateinit var releaseDate : TextView
     private lateinit var genre : TextView
-    private  var movie=Movie(0,"Test","Test","Test","Test","Test","Test","Test")
+    private  var movie=Movie(0,"Test","Test","Test","Test","Test","Test")
     private lateinit var website : TextView
     private lateinit var poster : ImageView
     private lateinit var backdrop : ImageView
     private lateinit var shareButton: FloatingActionButton
-    private var movieDetailViewModel =  MovieDetailViewModel(this@MovieDetailActivity::OpenMovie,null,null)
+    private var movieDetailViewModel =  MovieDetailViewModel()
     private val posterPath = "https://image.tmdb.org/t/p/w780"
     private val backdropPath = "https://image.tmdb.org/t/p/w500"
 
@@ -83,7 +84,8 @@ class MovieDetailActivity : AppCompatActivity() {
                 populateDetails()
             }
             else if (extras.containsKey("movie_id")){
-                movieDetailViewModel.getMovieDetails(extras.getLong("movie_id"))
+                movieDetailViewModel.getMovieDetails(extras.getLong("movie_id"),onSuccess = ::onSuccess,
+                    onError = ::onError)
             }
         } else {
             finish()
@@ -103,6 +105,14 @@ class MovieDetailActivity : AppCompatActivity() {
         } catch (e: ActivityNotFoundException) {
             // Definisati naredbe ako ne postoji aplikacija za navedenu akciju
         }
+    }
+    fun onSuccess(movie:Movie){
+        this.movie =movie;
+        populateDetails()
+    }
+    fun onError() {
+        val toast = Toast.makeText(applicationContext, "Error", Toast.LENGTH_SHORT)
+        toast.show()
     }
     private fun searchInYoutube(){
         //results?search_query=divergent+trailer
@@ -138,21 +148,14 @@ class MovieDetailActivity : AppCompatActivity() {
     private fun populateDetails() {
         title.text=movie.title
         releaseDate.text=movie.releaseDate
-        genre.text=movie.genre
         website.text=movie.homepage
         overview.text=movie.overview
         val context: Context = poster.getContext()
-        var id = 0;
-        if (movie.genre!==null)
-            id = context.getResources()
-                .getIdentifier(movie.genre, "drawable", context.getPackageName())
-        if (id===0) id=context.getResources()
-            .getIdentifier("picture1", "drawable", context.getPackageName())
         Glide.with(context)
             .load(posterPath + movie.posterPath)
             .placeholder(R.drawable.picture1)
-            .error(id)
-            .fallback(id)
+            .error(R.drawable.picture1)
+            .fallback(R.drawable.picture1)
             .into(poster);
         var backdropContext: Context = backdrop.getContext()
         Glide.with(backdropContext)
