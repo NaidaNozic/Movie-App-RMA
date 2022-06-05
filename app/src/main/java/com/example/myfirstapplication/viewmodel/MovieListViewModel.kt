@@ -1,5 +1,6 @@
 package com.example.myfirstapplication.viewmodel
 
+import android.content.Context
 import com.example.myfirstapplication.data.GetMoviesResponse
 import com.example.myfirstapplication.data.Movie
 import com.example.myfirstapplication.data.MovieRepository
@@ -14,6 +15,18 @@ class MovieListViewModel(private val searchDone: ((movies: List<Movie>) -> Unit)
                          private val onError: (()->Unit)?) {
 
     val scope = CoroutineScope(Job() + Dispatchers.Main)//CoroutineScope vodi računa o svim pokrenutim Coroutine -ama
+
+    fun getFavorites(context: Context, onSuccess: (movies: List<Movie>) -> Unit, //vjezba9
+                     onError: () -> Unit){
+        scope.launch{
+            val result = MovieRepository.getFavoriteMovies(context)
+            when (result) {
+                is List<Movie> -> onSuccess?.invoke(result)
+                else-> onError?.invoke()
+            }
+        }
+    }
+
 
     fun getFavoriteMovies():List<Movie>{
         return MovieRepository.getFavoriteMovies();

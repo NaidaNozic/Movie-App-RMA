@@ -36,7 +36,7 @@ class RecentMoviesFragment : Fragment() {
         recentMovies.adapter=recentMoviesAdapter
         recentMoviesAdapter.updateMovies(movieListViewModel.getRecentMovies())
         movieListViewModel.getUpcoming( onSuccess = ::onSuccess, onError = ::onError)
-        return view;
+        return view
     }
     fun onSuccess(movies:List<Movie>){
         val toast = Toast.makeText(context, "Upcoming movies found", Toast.LENGTH_SHORT)

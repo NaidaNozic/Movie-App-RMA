@@ -1,5 +1,6 @@
 package com.example.myfirstapplication.viewmodel
 
+import android.content.Context
 import android.util.Log
 import com.example.myfirstapplication.data.*
 import kotlinx.coroutines.CoroutineScope
@@ -23,6 +24,18 @@ class MovieDetailViewModel() {
         return movie ?: Movie(0, "Test", "Test", "Test", "Test",
             "https://www.imdb.com/title/tt0120737/","https://www.imdb.com/title/tt0120737/")
     }
+
+    fun writeDB(context: Context, movie:Movie, onSuccess: (movies: String) -> Unit, //vjezba9
+                onError: () -> Unit){
+        scope.launch{
+            val result = MovieRepository.writeFavorite(context,movie)
+            when (result) {
+                is String -> onSuccess?.invoke(result)
+                else-> onError?.invoke()
+            }
+        }
+    }
+
 
     fun getMovieDetails(query: Long, onSuccess: (movies: Movie) -> Unit,
                  onError: () -> Unit){

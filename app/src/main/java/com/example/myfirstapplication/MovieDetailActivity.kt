@@ -5,6 +5,8 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.View
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -32,6 +34,7 @@ class MovieDetailActivity : AppCompatActivity() {
     private var movieDetailViewModel =  MovieDetailViewModel()
     private val posterPath = "https://image.tmdb.org/t/p/w780"
     private val backdropPath = "https://image.tmdb.org/t/p/w500"
+    private lateinit var addFavorite : Button
 
     //Listener za click
     private val  mOnItemSelectedListener =  NavigationBarView.OnItemSelectedListener{ item ->
@@ -65,6 +68,7 @@ class MovieDetailActivity : AppCompatActivity() {
         website = findViewById(R.id.movie_website)
         shareButton = findViewById(R.id.shareButton)
         backdrop = findViewById(R.id.movie_backdrop)
+        addFavorite = findViewById(R.id.favorites)
 
         website.setOnClickListener{ //Potrebno je napraviti da se pokrene web preglednik kada se klikne na link web stranice filma
             // i da se učita navedena stranica.
@@ -75,6 +79,9 @@ class MovieDetailActivity : AppCompatActivity() {
         }
         title.setOnClickListener{
             searchInYoutube()
+        }
+        addFavorite.setOnClickListener{
+            writeDB()
         }
         val extras = intent.extras
 
@@ -106,13 +113,21 @@ class MovieDetailActivity : AppCompatActivity() {
             // Definisati naredbe ako ne postoji aplikacija za navedenu akciju
         }
     }
-    fun onSuccess(movie:Movie){
-        this.movie =movie;
-        populateDetails()
+    fun writeDB(){ //vjezba9
+        movieDetailViewModel.writeDB(applicationContext,this.movie,onSuccess = ::onSuccess1, onError = ::onError)
+    }
+    fun onSuccess1(message:String){
+        val toast = Toast.makeText(applicationContext, "Spaseno", Toast.LENGTH_SHORT)
+        toast.show()
+        addFavorite.visibility= View.GONE
     }
     fun onError() {
         val toast = Toast.makeText(applicationContext, "Error", Toast.LENGTH_SHORT)
         toast.show()
+    }
+    fun onSuccess(movie:Movie){
+        this.movie =movie;
+        populateDetails()
     }
     private fun searchInYoutube(){
         //results?search_query=divergent+trailer
