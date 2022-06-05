@@ -12,7 +12,8 @@ import com.example.myfirstapplication.R
 import com.example.myfirstapplication.data.Movie
 import com.example.myfirstapplication.viewmodel.MovieDetailViewModel
 //valja
-class SimilarMoviesFragment(name:String,id:Long?): Fragment() {
+class SimilarMoviesFragment(name:String,id:Long?,favourite:Boolean): Fragment() {
+    private var favourite = favourite
     private var movieName:String = name
     private var movieId:Long? = id
     private lateinit var movieRV:RecyclerView
@@ -26,6 +27,12 @@ class SimilarMoviesFragment(name:String,id:Long?): Fragment() {
         movieRV.layoutManager = LinearLayoutManager(activity)
         actorsRVSimpleSimilarAdapter = StringAdapter(movieList)
         movieRV.adapter = actorsRVSimpleSimilarAdapter
+        if(favourite){
+            movieId?.let { movieDetailViewModel.getSimilarMoviesByIdDB(requireContext(),it,onSuccess = ::onSuccess, onError = ::onError) }
+        }else{
+            movieId?.let { movieDetailViewModel.getSimilarMoviesById(it,onSuccess = ::onSuccess,
+                onError = ::onError) }
+        }
         movieId?.let { movieDetailViewModel.getSimilarMoviesById(it,onSuccess = ::onSuccess, onError = ::onError) }
         return view
     }

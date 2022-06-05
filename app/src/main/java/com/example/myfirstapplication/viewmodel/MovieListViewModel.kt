@@ -27,10 +27,6 @@ class MovieListViewModel(private val searchDone: ((movies: List<Movie>) -> Unit)
         }
     }
 
-
-    fun getFavoriteMovies():List<Movie>{
-        return MovieRepository.getFavoriteMovies();
-    }
     fun getRecentMovies():List<Movie>{
         return MovieRepository.getRecentMovies();
     }

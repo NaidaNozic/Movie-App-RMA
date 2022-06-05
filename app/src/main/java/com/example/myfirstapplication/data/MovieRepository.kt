@@ -21,11 +21,15 @@ object MovieRepository {
 
     private const val tmdb_api_key: String = BuildConfig.TMDB_API_KEY
 
-    fun getFavoriteMovies() : List<Movie> {
-        return favoriteMovies();
-    }
     fun getRecentMovies() : List<Movie> {
         return recentMovies();
+    }
+    suspend fun getCastDB(context: Context,id:Long) : List<Cast> {
+        return withContext(Dispatchers.IO){
+            var db = AppDatabase.getInstance(context)
+            var cast = db!!.movieDao().getMovieAndCastById(id)
+            return@withContext cast.cast
+        }
     }
     suspend fun getFavoriteMovies(context: Context) : List<Movie> { //vjezba9
         return withContext(Dispatchers.IO) {
@@ -34,11 +38,29 @@ object MovieRepository {
             return@withContext movies
         }
     }
-    suspend fun writeFavorite(context: Context,movie:Movie) : String?{ //vjezba9
+    suspend fun writeFavorite(context: Context,movie:Movie) : String?{
         return withContext(Dispatchers.IO) {
             try{
                 var db = AppDatabase.getInstance(context)
+                movie.favourite=1
                 db!!.movieDao().insertAll(movie)
+                val response = ActorsRepository.getCast(movie.id)
+                val cast = response?.cast
+                if(cast != null){
+                    for (castX in cast){
+                        castX.fromMovieId=movie.id
+                        db!!.castDao().insertAll(castX)
+                    }
+                }
+                val similarResponse = MovieRepository.getSimilarMovies(movie.id)
+                val simiar = similarResponse?.movies
+                if(simiar != null){
+                    for(sm in simiar){
+                        val newSM = SimilarMovies(movieId = movie.id,similarMovieId = sm.id)
+                        db!!.movieDao().insertAll(sm)
+                        db!!.similarMoviesDao().insert(newSM)
+                    }
+                }
                 return@withContext "success"
             }
             catch(error:Exception){
@@ -101,6 +123,20 @@ object MovieRepository {
             var response = ApiAdapter.retrofit.getSimilar(id)
             val responseBody = response.body()
             return@withContext responseBody
+        }
+    }
+    suspend fun getSimilarMoviesDB(context: Context,id:Long): List<Movie> {
+        return withContext(Dispatchers.IO){
+            var db = AppDatabase.getInstance(context)
+            var similarMovies = db!!.movieDao().getSimilarMoviesById(id)
+            return@withContext similarMovies.similarMovies
+        }
+    }
+    suspend fun getMovieDB(context: Context,id:Long) : Movie {
+        return withContext(Dispatchers.IO) {
+            var db = AppDatabase.getInstance(context)
+            var movie = db!!.movieDao().findById(id)
+            return@withContext movie
         }
     }
     suspend fun getMovie(id: Long

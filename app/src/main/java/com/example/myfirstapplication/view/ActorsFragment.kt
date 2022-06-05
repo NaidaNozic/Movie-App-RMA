@@ -11,7 +11,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.myfirstapplication.R
 import com.example.myfirstapplication.data.Cast
 import com.example.myfirstapplication.viewmodel.MovieDetailViewModel
-class ActorsFragment(name:String,id:Long?): Fragment() {
+class ActorsFragment(name:String,id:Long?,favourite:Boolean): Fragment() {
+    private val favourite = favourite
+    private var movieName:String = name
     private var movieId:Long? = id
     private lateinit var movieRV:RecyclerView
     private var actorsList= listOf<Cast>()
@@ -30,6 +32,12 @@ class ActorsFragment(name:String,id:Long?): Fragment() {
         movieRV.adapter = actorsRVSimpleSimilarAdapter
         movieId?.let { movieDetailViewModel.getActorsById(it,onSuccess = ::onSuccess,
             onError = ::onError) }
+        if(favourite){
+            movieId?.let { movieDetailViewModel.getActorsByIdDB(requireContext(),it,onSuccess = ::onSuccess,onError = ::onError) }
+        }else{
+            movieId?.let { movieDetailViewModel.getActorsById(it,onSuccess = ::onSuccess,
+                onError = ::onError) }
+        }
         return view
     }
 

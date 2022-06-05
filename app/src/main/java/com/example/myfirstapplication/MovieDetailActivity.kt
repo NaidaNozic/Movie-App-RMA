@@ -40,12 +40,22 @@ class MovieDetailActivity : AppCompatActivity() {
     private val  mOnItemSelectedListener =  NavigationBarView.OnItemSelectedListener{ item ->
         when (item.itemId) {
             R.id.navigation_actors -> {
-                val actorsFragment = ActorsFragment(movie.title,movie.id)
+                var actorsFragment:ActorsFragment
+                if(addFavorite.visibility==View.GONE){
+                    actorsFragment = ActorsFragment(movie.title,movie.id,true)
+                } else{
+                    actorsFragment = ActorsFragment(movie.title,movie.id,false)
+                }
                 openFragment(actorsFragment)
                 return@OnItemSelectedListener true
             }
             R.id.navigation_similar_movies -> {
-                val similarFragment = SimilarMoviesFragment(movie.title,movie.id)
+                var similarFragment:SimilarMoviesFragment
+                if(addFavorite.visibility==View.GONE) {
+                    similarFragment = SimilarMoviesFragment(movie.title, movie.id, true)
+                }else{
+                    similarFragment  = SimilarMoviesFragment(movie.title,movie.id, false)
+                }
                 openFragment(similarFragment)
                 return@OnItemSelectedListener true
             }

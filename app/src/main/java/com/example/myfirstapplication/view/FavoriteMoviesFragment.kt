@@ -28,7 +28,6 @@ class FavoriteMoviesFragment : Fragment() {
         favoriteMoviesAdapter = MovieListAdapter(arrayListOf()) { movie,view1,view2 ->
             showMovieDetails(movie,view1,view2) }
         favoriteMovies.adapter=favoriteMoviesAdapter
-        favoriteMoviesAdapter.updateMovies(movieListViewModel.getFavoriteMovies())
         context?.let { //vjezba9
             movieListViewModel.getFavorites(it,onSuccess = ::onSuccess, onError = ::onError)
         }

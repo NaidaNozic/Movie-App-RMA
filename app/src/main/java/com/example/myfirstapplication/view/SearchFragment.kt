@@ -41,7 +41,7 @@ class SearchFragment: Fragment() {
         searchButton.setOnClickListener{
             onClick();
         }
-        return view;
+        return view
     }
     companion object {
         fun newInstance(search:String): SearchFragment = SearchFragment().apply {
