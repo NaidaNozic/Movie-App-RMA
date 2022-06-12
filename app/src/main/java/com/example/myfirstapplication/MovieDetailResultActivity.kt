@@ -16,7 +16,6 @@ class MovieDetailResultActivity : AppCompatActivity() {
     private lateinit var title : TextView
     private lateinit var overview : TextView
     private lateinit var releaseDate : TextView
-    private lateinit var genre : TextView
     private lateinit var website : TextView
     private lateinit var poster : ImageView
     private lateinit var backdrop : ImageView
@@ -30,15 +29,13 @@ class MovieDetailResultActivity : AppCompatActivity() {
         title = findViewById(R.id.movie_title)
         overview = findViewById(R.id.movie_overview)
         releaseDate = findViewById(R.id.movie_release_date)
-        genre = findViewById(R.id.movie_genre)
         poster = findViewById(R.id.movie_poster)
         website = findViewById(R.id.movie_website)
         backdrop = findViewById(R.id.movie_backdrop)
         val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-
         notificationManager.cancel(123)
         if(intent?.getParcelableExtra<Movie>("movie")!==null) {
-            movie=intent?.getParcelableExtra("movie")!!
+            movie=intent?.getParcelableExtra<Movie>("movie")!!
             populateDetails()
         }
     }

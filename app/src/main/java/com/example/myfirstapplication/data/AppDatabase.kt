@@ -10,7 +10,6 @@ import kotlin.coroutines.CoroutineContext
 
 @Database(entities = arrayOf(Movie::class,Cast::class,SimilarMovies::class), version = 2)
 abstract class AppDatabase : RoomDatabase() {
-
     abstract fun movieDao(): MovieDao
     abstract fun castDao(): CastDao
     abstract fun similarMoviesDao(): SimilarMoviesDAO
@@ -26,12 +25,12 @@ abstract class AppDatabase : RoomDatabase() {
             }
             return INSTANCE!!
         }
+
         private fun buildRoomDB(context: Context) =
             Room.databaseBuilder(
                 context.applicationContext,
                 AppDatabase::class.java,
                 "cinaeste-db"
-            ).fallbackToDestructiveMigration()
-                .build()
+            ).build()
     }
 }

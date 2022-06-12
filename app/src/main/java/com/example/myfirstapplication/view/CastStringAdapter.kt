@@ -14,7 +14,9 @@ class CastStringAdapter (list: List<Cast>) : RecyclerView.Adapter<CastStringAdap
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SimpleViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(android.R.layout.simple_list_item_1, parent, false)
+        val view = LayoutInflater
+            .from(parent.context)
+            .inflate(android.R.layout.simple_list_item_1, parent, false)
         return SimpleViewHolder(view)
     }
 
