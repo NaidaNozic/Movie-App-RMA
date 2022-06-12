@@ -34,7 +34,7 @@ class SearchFragment: Fragment() {
     ): View? {
         var view = inflater.inflate(R.layout.search_fragment, container, false)
         searchText = view.findViewById(R.id.searchText)
-        movieListViewModel = MovieListViewModel()
+        movieListViewModel = context?.let { MovieListViewModel(it) }!!
         searchButton = view.findViewById(R.id.searchButton)
         arguments?.getString("search")?.let {
             searchText.setText(it)

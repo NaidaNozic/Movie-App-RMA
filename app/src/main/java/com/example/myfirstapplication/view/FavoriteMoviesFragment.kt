@@ -14,12 +14,13 @@ import com.example.myfirstapplication.MovieDetailActivity
 import com.example.myfirstapplication.R
 import com.example.myfirstapplication.data.Movie
 import com.example.myfirstapplication.viewmodel.MovieListViewModel
+import androidx.lifecycle.Observer
 import android.util.Pair as UtilPair
 
 class FavoriteMoviesFragment : Fragment() {
     private lateinit var favoriteMovies: RecyclerView
     private lateinit var favoriteMoviesAdapter: MovieListAdapter
-    private var movieListViewModel =  MovieListViewModel()
+    private lateinit var movieListViewModel :  MovieListViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var view =  inflater.inflate(R.layout.favorites_fragment, container, false)
@@ -27,11 +28,10 @@ class FavoriteMoviesFragment : Fragment() {
         favoriteMovies.layoutManager = GridLayoutManager(activity, 2)
         favoriteMoviesAdapter = MovieListAdapter(arrayListOf()) { movie,view1,view2 -> showMovieDetails(movie,view1,view2) }
         favoriteMovies.adapter=favoriteMoviesAdapter
-        context?.let {
-            movieListViewModel.getFavorites(
-                it,onSuccess = ::onSuccess,
-                onError = ::onError)
+        context?.let { movieListViewModel= MovieListViewModel(it) }
+        val moviesObserver = Observer<List<Movie>> { movies -> favoriteMoviesAdapter.updateMovies(movies)
         }
+        movieListViewModel.favoriteMovies.observe(viewLifecycleOwner, moviesObserver)
         return view;
     }
 

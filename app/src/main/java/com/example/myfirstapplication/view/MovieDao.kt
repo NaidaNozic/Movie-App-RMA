@@ -1,5 +1,6 @@
 package com.example.myfirstapplication.view
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.example.myfirstapplication.data.Movie
 import com.example.myfirstapplication.data.MovieWithCast
@@ -8,7 +9,7 @@ import com.example.myfirstapplication.data.MovieWithSimilarMovies
 @Dao
 interface MovieDao {
     @Query("SELECT * FROM movie WHERE favourite=1")
-    suspend fun getAll(): List<Movie>
+    fun getAll(): LiveData<List<Movie>>
 
     @Query("SELECT * FROM movie WHERE id=:id AND favourite=1 LIMIT 1")
     suspend fun findById(id: Long): Movie

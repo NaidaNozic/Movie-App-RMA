@@ -11,22 +11,24 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 //searchDone i onError metode su implementirane unutar SearchFragment-a i služe za izmjenu UI-a.
-class MovieListViewModel() {
+class MovieListViewModel(private val context: Context) {
+
+    val favoriteMovies = MovieRepository.getFavorites(context)
 
     val scope = CoroutineScope(Job() + Dispatchers.Main)
 
-    fun getFavorites(context: Context, onSuccess: (movies: List<Movie>) -> Unit,
+    fun getFavorites(query: String, onSuccess: (movies: List<Movie>) -> Unit,
                      onError: () -> Unit){
 
         // Create a new coroutine on the UI thread
         scope.launch{
 
             // Make the network call and suspend execution until it finishes
-            val result = MovieRepository.getFavoriteMovies(context)
+            val result = MovieRepository.searchRequest(query)
 
             // Display result of the network request to the user
             when (result) {
-                is List<Movie> -> onSuccess?.invoke(result)
+                is GetMoviesResponse -> onSuccess?.invoke(result.movies)
                 else-> onError?.invoke()
             }
         }
