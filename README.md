@@ -1,2 +1,2 @@
 # Movie-App-RMA
-Project for course "Movie application development"
+Project for course "Mobile application development"
