@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Cinaeste</string>
+    <string name="favouriteMovies">Favourite movies</string>
+    <string name="search">Search</string>
+    <string name="upcomingMovies">Upcoming movies</string>
+    <string name="favoritesText">My favourite movies</string>
+    <string name="favorite">Favourites</string>
+    <string name="recent">New movies</string>
+    <string name="recentTexts">Newest movies in cinemas and on the internet</string>
+</resources>
