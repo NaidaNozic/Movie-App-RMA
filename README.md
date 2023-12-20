@@ -16,9 +16,14 @@ Project for course "Mobile application development"
 <h2>API Integration:</h2>
 <p>This app fetches movie data from <a href="https://www.themoviedb.org/" target="_blank">The Movie Database (TMDb)</a> using their API.</p>
 
-<img src="screenshots/Upcoming.jpg">
-<img src="screenshots/MoviePage.jpg">
-<img src="screenshots/MovieDetails.jpg">
-<img src="screenshots/Sharing.jpg">
-<img src="screenshots/Search.jpg">
-<img src="screenshots/Favourites.jpg">
+<img src="images/Upcoming.jpg" width="300">
+
+<img src="images/MoviePage.jpg" width="300">
+
+<img src="images/MovieDetails.jpg" width="300">
+
+<img src="images/Sharing.jpg" width="300">
+
+<img src="images/Search.jpg" width="300">
+
+<img src="images/Favourites.jpg" width="300">
